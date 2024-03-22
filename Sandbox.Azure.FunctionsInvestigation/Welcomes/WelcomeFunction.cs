@@ -12,7 +12,11 @@ public class WelcomeFunction(
 {
     [Function(nameof(WelcomeFunction))]
     public async Task<HttpResponseData> RunAsync(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req,
+        [HttpTrigger(
+            AuthorizationLevel.Function,
+            "get",
+            Route = ROUTES.WELCOME
+            )] HttpRequestData req,
         [DurableClient] DurableTaskClient client
         )
     {

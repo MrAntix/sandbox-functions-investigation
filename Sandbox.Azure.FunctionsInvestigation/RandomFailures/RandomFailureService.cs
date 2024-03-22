@@ -8,6 +8,6 @@ public class RandomFailureService : IRandomFailureService
     {
         await Task.Delay(1000);
 
-        return _random.Next(1) != 0;
+        return _random.Next(2) != 0;
     }
 }
