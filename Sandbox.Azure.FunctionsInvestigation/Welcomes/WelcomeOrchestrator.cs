@@ -2,6 +2,7 @@
 
 namespace Sandbox.Azure.FunctionsInvestigation.Welcomes;
 
+[DurableTask(nameof(WelcomeOrchestrator))]
 public class WelcomeOrchestrator : TaskOrchestrator<string, string>
 {
     public override async Task<string> RunAsync(
@@ -16,11 +17,11 @@ public class WelcomeOrchestrator : TaskOrchestrator<string, string>
                 new RetryPolicy(5, TimeSpan.FromSeconds(1)))
             );
 
-        welcomes.Add(await context.CallActivityAsync<string>(nameof(WelcomeUnreliableActivity), options));
+        welcomes.Add(await context.CallWelcomeUnreliableActivityAsync("One", options));
 
         var tasks = new Task<string>[] {
-            context.CallActivityAsync<string>(nameof(WelcomeUnreliableActivity), options),
-            context.CallActivityAsync<string>(nameof(WelcomeUnreliableActivity), options)
+            context.CallWelcomeUnreliableActivityAsync("Two", options),
+            context.CallWelcomeUnreliableActivityAsync("Three", options)
         };
 
         await Task.WhenAll(tasks);

@@ -3,6 +3,7 @@ using Sandbox.Azure.FunctionsInvestigation.RandomFailures;
 
 namespace Sandbox.Azure.FunctionsInvestigation.Welcomes;
 
+[DurableTask(nameof(WelcomeUnreliableActivity))]
 public class WelcomeUnreliableActivity(
     IRandomFailureService service
     ) : TaskActivity<string, string>
@@ -12,7 +13,7 @@ public class WelcomeUnreliableActivity(
         string input
         )
     {
-        if (await service.ExecuteAsync()) return "Welcome!";
+        if (await service.ExecuteAsync()) return $"Welcome {input}!";
 
         throw new Exception("Oh No");
     }
