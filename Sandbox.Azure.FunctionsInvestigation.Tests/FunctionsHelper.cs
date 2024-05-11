@@ -27,9 +27,8 @@ public static class FunctionsHelper
         };
         host.OutputDataReceived += (sender, e) =>
         {
-            output.WriteLine(e.Data);
-
             if (e.Data is null) return;
+            output.WriteLine(e.Data);
 
             if (e.Data.Contains("The file is locked"))
                 throw new Exception("File locked");
